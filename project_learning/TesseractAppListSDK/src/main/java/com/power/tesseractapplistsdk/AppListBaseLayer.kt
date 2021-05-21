@@ -10,8 +10,7 @@ import com.power.tesseractapplistsdk.services.InstalledAppsService
 object AppListBaseLayer {
 
     lateinit var mInstallAppService: InstalledAppsService
-    // lateinit var context: Context
-    //context
+
     /**
      * Initialize Package
      */

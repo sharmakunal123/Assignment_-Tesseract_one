@@ -1,11 +1,13 @@
 package com.power.tesseractapplistsdk.data
 
+import android.graphics.drawable.Drawable
+
 data class InstalledAppData(
-    val appName: String? = null,
-    val packageName: String? = null,
-    val icon: String? = null,
-    val mainActivity: String? = null,
-    val clsName: String? = null,
-    val versionCode: Int? = null,
-    val versionName: String? = null,
+    var appName: String? = null,
+    var packageName: String? = null,
+    var icon: Drawable? = null,
+    var mainActivity: String? = null,
+    var clsName: String? = null,
+    var versionCode: Int? = null,
+    var versionName: String? = null,
 )
