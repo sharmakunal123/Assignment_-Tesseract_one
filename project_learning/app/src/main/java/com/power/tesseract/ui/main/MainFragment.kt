@@ -5,9 +5,6 @@ import android.content.ComponentName
 import android.content.Context.BIND_AUTO_CREATE
 import android.content.Intent
 import android.content.ServiceConnection
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.IBinder
 import android.os.RemoteException
@@ -20,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.power.tesseract.IMyAidlInterface
 import com.power.tesseract.R
+
 
 class MainFragment : Fragment() {
 
@@ -63,7 +61,6 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         val view = inflater.inflate(R.layout.main_fragment, container, false)
@@ -88,48 +85,6 @@ class MainFragment : Fragment() {
                     e.printStackTrace()
                 }
             }
-        }
-
-        // List<ApplicationInfo> apps = getPackageManager().getInstalledPackages(0);
-        //  val apps: List<ApplicationInfo> = getPackageManager().getInstalledApplications(0)
-        // for (app in apps) {
-        // if (app.flags and (ApplicationInfo.FLAG_UPDATED_SYSTEM_APP or ApplicationInfo.FLAG_SYSTEM) > 0) {
-        //      // It is a system app
-        //  } else {
-        //  // It is installed by the user
-        // }
-        //  }
-        // Flags: See below
-        // Flags: See below
-        // OR
-//        val flags = PackageManager.GET_META_DATA or
-//                PackageManager.GET_SHARED_LIBRARY_FILES or
-//                PackageManager.GET_UNINSTALLED_PACKAGES
-//
-//        val pm: PackageManager = getPackageManager()
-//        val applications = pm.getInstalledApplications(flags)
-//        for (appInfo in applications) {
-//            if (appInfo.flags and ApplicationInfo.FLAG_SYSTEM == 1) {
-//                // System application
-//            } else {
-//                // Installed by user
-//            }
-//        }
-
-
-        val packages =
-            requireActivity().packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
-        for (packageInfo in packages) {
-            if (ApplicationInfo.FLAG_SYSTEM == 1) {
-                // System application
-            } else {
-                // Installed by user
-            }
-            val packageName = packageInfo.packageName
-            Log.d("Package name", "Package name:$packageName")
-            Log.d("logo:", "logo:" + packageInfo.logo)
-            val icon: Drawable = requireContext().packageManager.getApplicationIcon(packageName)
-
         }
         return view
     }
