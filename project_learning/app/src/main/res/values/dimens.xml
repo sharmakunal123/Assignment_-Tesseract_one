@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <dimen name="header_margin">24dp</dimen>
+    <dimen name="card_side_margin">12dp</dimen>
+    <dimen name="card_bottom_margin">26dp</dimen>
+
+    <dimen name="parent_padding">15dp</dimen>
+
+
+    <dimen name="edit_text_height">60dp</dimen>
+    <dimen name="recycle_margin_top">60dp</dimen>
+    <dimen name="card_view_height">180dp</dimen>
+
+
+</resources>

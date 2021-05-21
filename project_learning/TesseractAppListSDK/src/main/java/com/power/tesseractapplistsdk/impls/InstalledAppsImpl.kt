@@ -1,6 +1,7 @@
 package com.power.tesseractapplistsdk.impls
 
 import android.annotation.SuppressLint
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import com.power.tesseractapplistsdk.data.InstalledAppData
@@ -24,18 +25,16 @@ class InstalledAppsImpl : InstalledAppsService {
 
         val localListData = mutableListOf<InstalledAppData>()
         for (packageInfo in packs) {
-                if (packageInfo.versionName == null) {
-                    continue
-                }
-            val packageName = packageInfo.packageName
-            val installedApps = InstalledAppData(
-                appName = packageInfo.applicationInfo.loadLabel(mPackageList!!).toString(),
-                packageName = packageInfo.packageName,
-                versionCode = packageInfo.versionCode,
-                versionName = packageInfo.versionName,
-                clsName = packageInfo.applicationInfo.className
-            )
-            localListData.add(installedApps)
+            if (!isSystemPackage(packageInfo)) {
+                val installedApps = InstalledAppData(
+                    appName = packageInfo.applicationInfo.loadLabel(mPackageList!!).toString(),
+                    packageName = packageInfo.packageName,
+                    versionCode = packageInfo.versionCode,
+                    versionName = packageInfo.versionName,
+                    clsName = packageInfo.applicationInfo.className
+                )
+                localListData.add(installedApps)
+            }
         }
         responseList =
             localListData.sortedWith(compareBy { it.appName }) as MutableList<InstalledAppData>
@@ -43,26 +42,8 @@ class InstalledAppsImpl : InstalledAppsService {
         return responseList
     }
 
+    private fun isSystemPackage(pkgInfo: PackageInfo): Boolean {
+        return pkgInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
+    }
 
-    // App name
-    // String appname = packageManager.getApplicationLabel(packageName).toString()
-//                val appName =
-//                    requireActivity().packageManager.getApplicationLabel(packageInfo).toString()
-//                Log.d("Resule::", "AppNames:$appName")
-//                requireActivity().packageManager.getPackageInfo(packageName, 0).apply {
-//                    Log.d("Resule::", "versionCode:${versionCode})")
-//                    Log.d("Resule::", "versionNames:${versionName}")
-//                    Log.d("Resule::", "App Names Names:${this.applicationInfo.className}")
-//                }
-//                val icon: Drawable = requireContext().packageManager.getApplicationIcon(packageName)
-
-    // List<ApplicationInfo> apps = getPackageManager().getInstalledPackages(0);
-    //  val apps: List<ApplicationInfo> = getPackageManager().getInstalledApplications(0)
-    // for (app in apps) {
-    // if (app.flags and (ApplicationInfo.FLAG_UPDATED_SYSTEM_APP or ApplicationInfo.FLAG_SYSTEM) > 0) {
-    //      // It is a system app
-    //  } else {
-    //  // It is installed by the user
-    // }
-    //  }
 }
