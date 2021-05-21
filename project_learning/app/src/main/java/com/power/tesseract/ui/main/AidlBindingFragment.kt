@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.power.tesseract.IMyAidlInterface
 import com.power.tesseract.R
-import com.power.tesseract.viewmodels.MainViewModel
+import com.power.tesseract.viewmodels.AidlViewModel
 
 
 class AidlBindingFragment : Fragment() {
@@ -26,7 +26,7 @@ class AidlBindingFragment : Fragment() {
         fun newInstance() = AidlBindingFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: AidlViewModel
     var mICommon: IMyAidlInterface? = null
 
     private val serviceConn = object : ServiceConnection {
@@ -45,9 +45,9 @@ class AidlBindingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(AidlViewModel::class.java)
 
-        val view = inflater.inflate(R.layout.main_fragment, container, false)
+        val view = inflater.inflate(R.layout.aidl_binding_fragment, container, false)
 
         view.findViewById<Button>(R.id.btn_bind).apply {
             setOnClickListener {

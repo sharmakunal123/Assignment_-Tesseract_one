@@ -11,10 +11,11 @@
         android:padding="@dimen/parent_padding"
         tools:context=".ui.main.MainFragment">
 
-        <EditText
-            android:id="@+id/et_search_bar"
+        <Button
+            android:id="@+id/btn_get_aidl_data"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_text_height"
+            android:text="@string/get_aidl_sensor_data"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +28,6 @@
             android:layout_marginTop="@dimen/recycle_margin_top"
             android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@+id/et_search_bar"
             tools:context="com.google.samples.apps.sunflower.GardenActivity"
             tools:listitem="@layout/list_items_app" />
 

@@ -8,9 +8,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
+import com.google.gson.Gson
 import com.power.tesseract.adapter.PackagesListAdapter
 import com.power.tesseract.databinding.MainFragmentBinding
+import com.power.tesseract.services.MyJobService
+import com.power.tesseract.utils.Preferences
 import com.power.tesseract.viewmodels.MainViewModel
+import java.util.concurrent.TimeUnit
 
 
 class MainFragment : Fragment() {
@@ -39,30 +45,33 @@ class MainFragment : Fragment() {
 
     private fun fetchDataObserver(adapter: PackagesListAdapter) {
         viewModel.getListOfPackages().observe(requireActivity(), Observer { listOfInstalledPacks ->
-
             // Filter and Adding icon of Installed Applications
+            val listOfPackages = arrayListOf<String>()
             listOfInstalledPacks.forEach {
                 val packageName = it.packageName
                 if (packageName != null) {
                     val icon: Drawable =
                         requireContext().packageManager.getApplicationIcon(packageName)
                     it.icon = icon
+                    listOfPackages.add(packageName)
                 }
+
+            }
+            val gson = Gson()
+            val packJsonList = gson.toJson(listOfPackages)
+            activity?.let {
+                Preferences.setListOfPackages(it, packJsonList)
             }
 
             adapter.submitList(listOfInstalledPacks)
         })
     }
 
-
-//    fun runBackgroundService() {
-//        val serviceComponent = ComponentName(requireActivity(), MyJobService::class.java)
-//        val builder = JobInfo.Builder(0, serviceComponent)
-//        builder.setMinimumLatency((30 * 1000).toLong()) // Wait at least 30s
-//
-//        val jobScheduler = requireActivity().getSystemService(context.JOb) as JobScheduler
-//        jobScheduler.schedule(builder.build())
-//
-//    }
+    fun runBackgroundService() {
+        val periodicWorkRequest = PeriodicWorkRequest.Builder(
+            MyJobService::class.java, 15, TimeUnit.MINUTES
+        ).build()
+        WorkManager.getInstance().enqueue(periodicWorkRequest)
+    }
 
 }
