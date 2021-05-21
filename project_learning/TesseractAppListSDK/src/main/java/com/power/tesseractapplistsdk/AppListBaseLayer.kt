@@ -20,4 +20,5 @@ object AppListBaseLayer {
     }
 
     fun getAppData() = mInstallAppService.getAppData()
+
 }

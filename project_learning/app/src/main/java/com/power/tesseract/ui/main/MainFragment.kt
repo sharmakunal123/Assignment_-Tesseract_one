@@ -21,7 +21,6 @@ class MainFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,6 +31,7 @@ class MainFragment : Fragment() {
             val launchIntent = requireActivity().packageManager.getLaunchIntentForPackage(it)
             startActivity(launchIntent)
         })
+
         binding.rvPlantList.adapter = adapter
         fetchDataObserver(adapter)
         return binding.root
@@ -39,6 +39,8 @@ class MainFragment : Fragment() {
 
     private fun fetchDataObserver(adapter: PackagesListAdapter) {
         viewModel.getListOfPackages().observe(requireActivity(), Observer { listOfInstalledPacks ->
+
+            // Filter and Adding icon of Installed Applications
             listOfInstalledPacks.forEach {
                 val packageName = it.packageName
                 if (packageName != null) {
@@ -51,5 +53,16 @@ class MainFragment : Fragment() {
             adapter.submitList(listOfInstalledPacks)
         })
     }
+
+
+//    fun runBackgroundService() {
+//        val serviceComponent = ComponentName(requireActivity(), MyJobService::class.java)
+//        val builder = JobInfo.Builder(0, serviceComponent)
+//        builder.setMinimumLatency((30 * 1000).toLong()) // Wait at least 30s
+//
+//        val jobScheduler = requireActivity().getSystemService(context.JOb) as JobScheduler
+//        jobScheduler.schedule(builder.build())
+//
+//    }
 
 }
