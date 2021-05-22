@@ -3,7 +3,7 @@ package com.power.tesseractapplistsdk.data
 import android.graphics.drawable.Drawable
 
 data class InstalledAppData(
-    var appName: String? = null,
+    var appName: String = "",
     var packageName: String? = null,
     var icon: Drawable? = null,
     var mainActivity: String? = null,
