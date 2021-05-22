@@ -14,7 +14,6 @@ import kotlinx.coroutines.withContext
 class MainViewModel : ViewModel() {
 
     private val mutablePackagesList = MutableLiveData<List<InstalledAppData>>()
-    val mSearchQuery = MutableLiveData<String>()
 
     var mSearchJob: Job? = null
 
@@ -22,6 +21,9 @@ class MainViewModel : ViewModel() {
         requestAllPackages()
     }
 
+    /**
+     * Get List of Packages
+     */
     fun requestAllPackages() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
