@@ -81,11 +81,11 @@ class MainFragment : Fragment() {
                 }
 
             }
-            val gson = Gson()
-            val packJsonList = gson.toJson(listOfPackages)
             activity?.let {
-                Preferences.setListOfPackages(it, packJsonList)
                 runBackgroundService()
+                val gson = Gson()
+                val packJsonList = gson.toJson(listOfPackages)
+                Preferences.setListOfPackages(it, packJsonList)
             }
             adapter.submitList(listOfInstalledPacks)
         })
@@ -99,8 +99,8 @@ class MainFragment : Fragment() {
             .setRequiresCharging(true)
             .build()
         val work = PeriodicWorkRequestBuilder<MyJobService>(
-            10,
-            TimeUnit.SECONDS
+            15,
+            TimeUnit.MINUTES
         )
             .setConstraints(constraints)
             .build()
