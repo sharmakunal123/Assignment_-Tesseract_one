@@ -9,6 +9,7 @@
 
 
     <dimen name="edit_text_height">60dp</dimen>
+    <dimen name="btn_height">60dp</dimen>
     <dimen name="recycle_margin_top">60dp</dimen>
     <dimen name="card_view_height">180dp</dimen>
     <dimen name="margin_top">20dp</dimen>

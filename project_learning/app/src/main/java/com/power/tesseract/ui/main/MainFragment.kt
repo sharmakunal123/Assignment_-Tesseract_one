@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -49,7 +50,29 @@ class MainFragment : Fragment() {
         binding.rvPlantList.adapter = adapter
         fetchDataObserver(adapter)
         handleNavigation(binding)
+        handleSearchFun(binding)
         return binding.root
+    }
+
+    private fun handleSearchFun(binding: MainFragmentBinding) {
+        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(str: String?): Boolean {
+                str?.let {
+                    viewModel.handleSearchFunctionality(it)
+                }
+                return true
+            }
+        })
+
+        binding.search.setOnCloseListener {
+            viewModel.requestAllPackages()
+            false
+        }
     }
 
     /**
@@ -69,7 +92,6 @@ class MainFragment : Fragment() {
      */
     private fun fetchDataObserver(adapter: PackagesListAdapter) {
         viewModel.getListOfPackages().observe(requireActivity(), Observer { listOfInstalledPacks ->
-            // Filter and Adding icon of Installed Applications
             val listOfPackages = arrayListOf<String>()
             listOfInstalledPacks.forEach {
                 val packageName = it.packageName
@@ -87,6 +109,7 @@ class MainFragment : Fragment() {
                 val packJsonList = gson.toJson(listOfPackages)
                 Preferences.setListOfPackages(it, packJsonList)
             }
+//            adapter.
             adapter.submitList(listOfInstalledPacks)
         })
     }

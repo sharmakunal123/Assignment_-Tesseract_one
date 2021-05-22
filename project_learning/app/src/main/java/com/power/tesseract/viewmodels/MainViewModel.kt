@@ -7,14 +7,22 @@ import androidx.lifecycle.viewModelScope
 import com.power.tesseractapplistsdk.AppListBaseLayer
 import com.power.tesseractapplistsdk.data.InstalledAppData
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainViewModel : ViewModel() {
 
     private val mutablePackagesList = MutableLiveData<List<InstalledAppData>>()
+    val mSearchQuery = MutableLiveData<String>()
+
+    var mSearchJob: Job? = null
 
     init {
+        requestAllPackages()
+    }
+
+    fun requestAllPackages() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 mutablePackagesList.postValue(AppListBaseLayer.getAppData())
@@ -28,5 +36,28 @@ class MainViewModel : ViewModel() {
     fun getListOfPackages(): LiveData<List<InstalledAppData>> {
         return mutablePackagesList
     }
+
+    /**
+     * Search Implementation
+     */
+    fun handleSearchFunctionality(appName: String) {
+        mSearchJob?.cancel()
+        mSearchJob = viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                mutablePackagesList.value?.let { listApp ->
+                    val filteredNot = listApp.filter {
+                        it.appName.contains(appName)
+                    }
+                    if (filteredNot.isEmpty()) {
+                        mutablePackagesList.postValue(emptyList())
+                        mutablePackagesList.postValue(mutablePackagesList.value)
+                    } else {
+                        mutablePackagesList.postValue(filteredNot)
+                    }
+                }
+            }
+        }
+    }
+
 
 }
