@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">Myapplication</string>
+    <string name="app_name">Tesseract App</string>
+    <string name="get_aidl_sensor_data">Get AIDL Sensor Data</string>
+    <string name="request_sensor_data">Request sensor Data</string>
+    <string name="bind_service">Bind service</string>
+    <string name="aidl_conn_error">"Please check If you have run the PhoneOrientationData Application."</string>
+
+    <string name="not_installed_app_error">"Please install PhoneOrientationData Application"</string>
+
+    <string name="unabe_to_open_app">Unable To Open Application</string>
+    <string name="notify_id">Default_channel_id</string>
 </resources>

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,22 +13,109 @@
 
         <Button
             android:id="@+id/btn_bind"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Bind"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/bind_service"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/btn_calculate"
-            android:layout_width="wrap_content"
+            android:id="@+id/btn_request_data"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Calculate"
+            android:text="@string/request_sensor_data"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_bind" />
+
+        <TextView
+            android:id="@+id/tv_total_result"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top"
+            android:gravity="center_horizontal"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@android:color/holo_blue_bright"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_request_data" />
+
+
+        <TextView
+            android:id="@+id/tv_x_axis"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top"
+            android:gravity="center_horizontal"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@android:color/holo_blue_bright"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_total_result" />
+
+        <TextView
+            android:id="@+id/tv_y_axis"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top"
+            android:gravity="center_horizontal"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@android:color/holo_blue_bright"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_x_axis" />
+
+        <TextView
+            android:id="@+id/tv_z_axis"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top"
+            android:gravity="center_horizontal"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@android:color/holo_blue_bright"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_y_axis" />
+
+
+        <TextView
+            android:id="@+id/tv_accuracy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top"
+            android:gravity="center_horizontal"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@android:color/holo_blue_bright"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_z_axis" />
+
+        <TextView
+            android:id="@+id/tv_error_display"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@android:color/holo_blue_bright"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--        Combined view for visibility -->
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_of_views"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="tv_total_result,tv_x_axis,tv_y_axis,tv_z_axis ,tv_accuracy" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -5,20 +5,23 @@ import com.power.tesseractapplistsdk.impls.InstalledAppsImpl
 import com.power.tesseractapplistsdk.services.InstalledAppsService
 
 /**
- * Entry Base class for module
+ * Entry class for module
  */
 object AppListBaseLayer {
 
     lateinit var mInstallAppService: InstalledAppsService
 
     /**
-     * Initialize Package
+     * Initialize Package.
      */
     fun initModel(packageList: PackageManager) {
         mInstallAppService = InstalledAppsImpl()
         mInstallAppService.setPackageData(packageList)
     }
 
+    /**
+     * Request List of Packages.
+     */
     fun getAppData() = mInstallAppService.getAppData()
 
 }
