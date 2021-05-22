@@ -38,11 +38,13 @@ class MyJobService(private val appContext: Context, workerParams: WorkerParamete
             val prefSize = userArray.size
             val currentSize = list.size
             if (currentSize > prefSize) {
+                Log.e("WorkMangaer:kk", "Inside Plus")
                 handleNotificaiton(
                     appContext.getString(R.string.app_name),
                     "${currentSize - prefSize} Application Installed"
                 )
             } else if (currentSize < prefSize) {
+                Log.e("WorkMangaer:kk", "Inside Minus")
                 handleNotificaiton(
                     appContext.getString(R.string.app_name),
                     "${prefSize - currentSize} Application Deleted"
@@ -50,6 +52,7 @@ class MyJobService(private val appContext: Context, workerParams: WorkerParamete
             }
             updatePreferencesData(gson, list)
         }
+        Log.e("WorkMangaer:kk", "isWorking")
         return Result.success()
     }
 
