@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
 class MainViewModel : ViewModel() {
 
@@ -44,15 +45,19 @@ class MainViewModel : ViewModel() {
      */
     fun handleSearchFunctionality(appName: String) {
         mSearchJob?.cancel()
+        if (appName.isEmpty()) {
+            requestAllPackages()
+            return
+        }
         mSearchJob = viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 mutablePackagesList.value?.let { listApp ->
                     val filteredNot = listApp.filter {
-                        it.appName.contains(appName)
+                        it.appName.toLowerCase(Locale.getDefault())
+                            .startsWith(appName.toLowerCase(Locale.getDefault()))
                     }
                     if (filteredNot.isEmpty()) {
-                        mutablePackagesList.postValue(emptyList())
-                        mutablePackagesList.postValue(mutablePackagesList.value)
+                        requestAllPackages()
                     } else {
                         mutablePackagesList.postValue(filteredNot)
                     }
